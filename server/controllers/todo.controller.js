@@ -1,0 +1,166 @@
+const Todo = require('../models/Todo');
+const User = require('../models/User');
+const Project = require('../models/Project');
+
+const getAllTodos = async (req, res) => {
+	try {
+		const validUser = await User.findById(req.user.id);
+
+		if (validUser) {
+			const todos = await Todo.findByUser(validUser._id);
+
+			return res.status(200).json({ todos });
+		} else {
+			return res.status(400).json({
+				error: 'bad_request',
+				message: `Could not find user with id ${req.user.id}`,
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({
+			error: 'server_error',
+			message: error.message,
+		});
+	}
+};
+const addTodo = async (req, res) => {
+	const { text, priority, dueDate, project } = req.body;
+
+	try {
+		const validUser = await User.findById(req.user.id);
+
+		if (validUser) {
+			const validProject = await Project.findOne({ title: project });
+
+			if (validProject) {
+				const newTodo = new Todo({
+					text,
+					priority,
+					dueDate,
+					project: validProject._id,
+					user: validUser._id,
+				});
+
+				const todo = await newTodo.save();
+
+				return res.status(201).json({ todo });
+			} else {
+				return res.status(400).json({
+					error: 'validation_error',
+					message: `Project with title ${project} does not exist`,
+				});
+			}
+		} else {
+			return res.status(400).json({
+				error: 'bad_request',
+				message: `User with id ${req.user.id} was not found`,
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({
+			error: 'server_error',
+			message: error.message,
+		});
+	}
+};
+const updateTodo = async (req, res) => {
+	const { text, priority, dueDate, project } = req.body;
+
+	try {
+		const validTodo = await Todo.findById(req.params.id);
+
+		if (validTodo) {
+			const validUser = await User.findById(req.user.id);
+
+			if (validUser) {
+				if (validUser._id.toString() === validTodo.user.toString()) {
+					const validProject = await Project.findOneByTitle(project);
+
+					if (validProject) {
+						const updatedTodo = await Todo.findByIdAndUpdate(validTodo._id, {
+							$set: {
+								text,
+								priority,
+								dueDate,
+								project: validProject._id,
+							},
+						});
+
+						return res.status(200).json({ updatedTodo });
+					} else {
+						return res.status(400).json({
+							error: 'bad_request',
+							message: `Project with title ${project} does not exist`,
+						});
+					}
+				} else {
+					return res.status(401).json({
+						error: 'not_authorized',
+						message: 'You are not authorized to update this todo',
+					});
+				}
+			} else {
+				return res.status(400).json({
+					error: 'bad_request',
+					message: `User with id ${req.user.id} was not found`,
+				});
+			}
+		} else {
+			return res.status(400).json({
+				error: 'bad_request',
+				message: `Todo with id ${req.params.id} does not exist`,
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({
+			error: 'server_error',
+			message: error.message,
+		});
+	}
+};
+const deleteTodo = async (req, res) => {
+	try {
+		const validUser = await User.findById(req.user.id);
+
+		if (validUser) {
+			const validTodo = await Todo.findById(req.params.id);
+
+			if (validTodo) {
+				if (validTodo.user.toString() === validUser._id.toString()) {
+					await Todo.findByIdAndDelete(req.params.id);
+
+					return res
+						.status(200)
+						.json({ message: `Successfully deleted todo with id ${req.params.id}` });
+				} else {
+					return res.status(401).json({
+						error: 'not_authorized',
+						message: 'You are not authorized to delete this todo',
+					});
+				}
+			} else {
+				return res.status(400).json({
+					error: 'bad_request',
+					message: `Todo with id ${id} does not exist`,
+				});
+			}
+		} else {
+			return res.status(400).json({
+				error: 'bad_request',
+				message: `User with id ${req.user.id} was not found`,
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({
+			error: 'server_error',
+			message: error.message,
+		});
+	}
+};
+
+module.exports = {
+	addTodo,
+	deleteTodo,
+	getAllTodos,
+	updateTodo,
+};
