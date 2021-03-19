@@ -39,6 +39,13 @@ TodoSchema.set('toJSON', {
 	},
 });
 
+TodoSchema.statics.findByUser = function (user_id) {
+	return this.find({ user: user_id });
+};
+TodoSchema.statics.findByProject = function (project_id) {
+	return this.find({ project: project_id });
+};
+
 const Todo = model('Todo', TodoSchema);
 
 module.exports = Todo;
