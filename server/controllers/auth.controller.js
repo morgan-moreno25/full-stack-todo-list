@@ -10,7 +10,7 @@ const login = async (req, res) => {
 		const userExists = await User.findByUsername(username);
 
 		if (userExists) {
-			const isMatch = userExists.validatePassword(password);
+			const isMatch = await bcrypt.compare(password, userExists.passwordHash);
 
 			if (isMatch) {
 				const token = await jwt.sign({ id: userExists._id }, config.JWT_SECRET);

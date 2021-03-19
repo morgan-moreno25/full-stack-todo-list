@@ -33,10 +33,6 @@ UserSchema.set('toJSON', {
 		delete returnedObject.updatedAt;
 	},
 });
-UserSchema.methods.validatePassword = async function (password) {
-	const isMatch = await bcrypt.compare(password, this.passwordHash);
-	return isMatch;
-};
 UserSchema.statics.findByUsername = function (username) {
 	return this.findOne({ username });
 };
