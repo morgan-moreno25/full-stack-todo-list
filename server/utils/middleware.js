@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
 
-module.exports = authenticate = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
 	let token = req.get('Authorization');
 
 	if (token) {
@@ -16,4 +16,8 @@ module.exports = authenticate = async (req, res, next) => {
 			message: 'Authorization token is required',
 		});
 	}
+};
+
+module.exports = {
+	authenticate,
 };
