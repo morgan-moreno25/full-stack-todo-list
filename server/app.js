@@ -10,4 +10,6 @@ connect_db()
 app.use(express.json());
 app.use(cors());
 
+app.use('/', require('./routes'));
+
 module.exports = app;
