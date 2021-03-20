@@ -77,14 +77,18 @@ const updateTodo = async (req, res) => {
 					const validProject = await Project.findOneByTitle(project);
 
 					if (validProject) {
-						const updatedTodo = await Todo.findByIdAndUpdate(validTodo._id, {
-							$set: {
-								text,
-								priority,
-								dueDate,
-								project: validProject._id,
+						const updatedTodo = await Todo.findByIdAndUpdate(
+							validTodo._id,
+							{
+								$set: {
+									text,
+									priority,
+									dueDate,
+									project: validProject._id,
+								},
 							},
-						});
+							{ new: true }
+						);
 
 						return res.status(200).json({ updatedTodo });
 					} else {
