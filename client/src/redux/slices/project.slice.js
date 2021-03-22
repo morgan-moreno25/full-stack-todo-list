@@ -7,6 +7,9 @@ export const getAllProjects = createAsyncThunk('project/getAll', async (_, thunk
 
 	try {
 		const data = await projectService.getAllProjects(config);
+		if (data.error) {
+			throw data;
+		}
 		return {
 			projects: data.projects,
 		};
@@ -22,6 +25,9 @@ export const addProject = createAsyncThunk(
 
 		try {
 			const data = await projectService.addProject(body, config);
+			if (data.error) {
+				throw data;
+			}
 			return {
 				project: data.project,
 			};
@@ -38,6 +44,9 @@ export const updateProject = createAsyncThunk(
 
 		try {
 			const data = await projectService.updateProject(id, body, config);
+			if (data.error) {
+				throw data;
+			}
 			return {
 				id: id,
 				updatedProject: data.updatedProject,
@@ -52,6 +61,9 @@ export const deleteProject = createAsyncThunk('project/delete', async ({ id }, t
 
 	try {
 		const data = await projectService.deleteProject(id, config);
+		if (data.error) {
+			throw data;
+		}
 		return {
 			id: id,
 			message: data.message,
@@ -71,7 +83,7 @@ const projectSlice = createSlice({
 	},
 	reducers: {
 		setCurrentProject: (state, { payload }) => {
-			state.currentProject = payload.currentProject;
+			state.currentProject = payload.project;
 		},
 	},
 	extraReducers: builder => {

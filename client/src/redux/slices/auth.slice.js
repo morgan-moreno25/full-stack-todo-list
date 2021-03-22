@@ -8,6 +8,10 @@ export const login = createAsyncThunk('auth/login', async ({ username, password 
 
 	try {
 		const data = await authService.login(body, config);
+		if (data.error) {
+			throw data;
+		}
+
 		return {
 			token: data.token,
 			user: data.user,
@@ -24,6 +28,9 @@ export const register = createAsyncThunk(
 
 		try {
 			const data = await authService.register(body, config);
+			if (data.error) {
+				throw data;
+			}
 			return {
 				token: data.token,
 				user: data.user,
@@ -38,6 +45,9 @@ export const loadUser = createAsyncThunk('auth/loadUser', async (_, thunkAPI) =>
 
 	try {
 		const data = await authService.loadUser(config);
+		if (data.error) {
+			throw data;
+		}
 		return {
 			user: data.user,
 		};
