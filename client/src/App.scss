@@ -25,6 +25,11 @@ $white: #fff;
 		grid-area: nav;
 		background: $light;
 		box-shadow: 0 2px 2px $dark;
+		display: grid;
+		grid-template-rows: 10vh 90vh;
+		grid-template-areas:
+			'title'
+			'projects';
 	}
 
 	#header {
@@ -33,8 +38,7 @@ $white: #fff;
 		flex-direction: row;
 		justify-content: space-between;
 		align-content: center;
-		vertical-align: middle;
-		line-height: 10vh;
+		border-bottom: 1px solid $dark;
 
 		#header-title {
 			display: flex;
