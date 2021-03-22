@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken');
 const config = require('../utils/config');
+const moment = require('moment');
+
+const useTimestamp = () => {
+	const timestamp = `${moment().hours()}:${moment().minutes()}`;
+	return timestamp;
+};
 
 const authenticate = async (req, res, next) => {
 	let token = req.get('Authorization');
@@ -18,6 +24,14 @@ const authenticate = async (req, res, next) => {
 	}
 };
 
+const requestLogger = (req, res, next) => {
+	const timestamp = useTimestamp();
+	console.log(`[${timestamp}] - ${req.method} ${req.path}`);
+	console.log(`[${timestamp}] - Body: `, req.body);
+	next();
+};
+
 module.exports = {
 	authenticate,
+	requestLogger,
 };
