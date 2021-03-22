@@ -7,6 +7,9 @@ export const getAllTodos = createAsyncThunk('todo/getAll', async (_, thunkAPI) =
 
 	try {
 		const data = await todoService.getAllTodos(config);
+		if (data.error) {
+			throw data;
+		}
 		return {
 			todos: data.todos,
 		};
@@ -22,6 +25,9 @@ export const addTodo = createAsyncThunk(
 
 		try {
 			const data = await todoService.addTodo(body, config);
+			if (data.error) {
+				throw data;
+			}
 			return {
 				todo: data.todo,
 			};
@@ -38,6 +44,9 @@ export const updateTodo = createAsyncThunk(
 
 		try {
 			const data = await todoService.updateTodo(id, body, config);
+			if (data.error) {
+				throw data;
+			}
 			return {
 				id,
 				updatedTodo: data.updatedTodo,
@@ -52,6 +61,9 @@ export const deleteTodo = createAsyncThunk('todo/delete', async ({ id }, thunkAP
 
 	try {
 		const data = await todoService.deleteTodo(id, config);
+		if (data.error) {
+			throw data;
+		}
 		return {
 			id,
 			message: data.message,
