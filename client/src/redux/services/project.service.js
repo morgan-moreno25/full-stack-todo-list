@@ -29,7 +29,7 @@ const ProjectService = (() => {
 	};
 	const deleteProject = async (id, config) => {
 		try {
-			const repsonse = await axios.delete(`${url}/${id}`, config);
+			const response = await axios.delete(`${url}/${id}`, config);
 			return response.data;
 		} catch (error) {
 			return error.response.data;
