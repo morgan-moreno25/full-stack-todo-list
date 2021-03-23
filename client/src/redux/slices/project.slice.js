@@ -114,6 +114,7 @@ const projectSlice = createSlice({
 			if (index !== -1) {
 				state.data.splice(index, 1, payload.updatedProject);
 			}
+			state.currentProject = payload.updatedProject;
 			state.isLoading = false;
 		});
 		builder.addCase(deleteProject.fulfilled, (state, { payload }) => {
