@@ -15,6 +15,10 @@ const TodoSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	isComplete: {
+		type: Boolean,
+		default: false,
+	},
 	project: {
 		type: Schema.Types.ObjectId,
 		ref: 'Project',

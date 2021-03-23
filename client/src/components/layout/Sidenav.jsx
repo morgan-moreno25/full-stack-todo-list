@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentProject } from '../../redux/slices/project.slice';
 
 import { Navbar, Button } from 'react-bootstrap';
-import AddProjectModal from '../content/AddProjectModal';
+import AddProjectModal from '../content/modals/AddProjectModal';
 
 export default function Sidenav() {
 	const dispatch = useDispatch();

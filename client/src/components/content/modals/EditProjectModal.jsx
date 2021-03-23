@@ -1,35 +1,42 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addProject } from '../../redux/slices/project.slice';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProject } from '../../../redux/slices/project.slice';
+import { updateAlert, clearAlert } from '../../../redux/slices/alert.slice';
 
-import { Button, Modal, Form } from 'react-bootstrap';
-import { clearAlert, updateAlert } from '../../redux/slices/alert.slice';
+import { Modal, Button, Form } from 'react-bootstrap';
 
-export default function AddProjectModal() {
+export default function EditProjectModal() {
 	const dispatch = useDispatch();
+
+	const currentProject = useSelector(state => state.project.currentProject);
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 
-	const toggleModal = () => {
-		setIsOpen(!isOpen);
-	};
+	useEffect(() => {
+		setTitle(currentProject.title);
+		setDescription(currentProject.description);
+	}, [currentProject]);
+
+	const toggleModal = () => setIsOpen(!isOpen);
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 
-		if (!title) {
-			return;
-		}
+		const result = await dispatch(
+			updateProject({ id: currentProject.id, project: { title, description } })
+		);
 
-		const result = await dispatch(addProject({ title, description }));
-
-		if (addProject.fulfilled.match(result)) {
-			const { project } = result.payload;
+		if (updateProject.fulfilled.match(result)) {
+			const { updatedProject } = result.payload;
+			console.log(updatedProject);
 
 			dispatch(
-				updateAlert({ type: 'success', message: `Successfully added project ${project.title}` })
+				updateAlert({
+					type: 'success',
+					message: `Successfully updated project ${updatedProject.title}`,
+				})
 			);
 		} else {
 			const { error, message } = result.payload;
@@ -41,19 +48,16 @@ export default function AddProjectModal() {
 			dispatch(clearAlert());
 		}, 10000);
 
-		setTitle('');
-		setDescription('');
-
 		toggleModal();
 	};
 
 	return (
 		<>
-			<Button variant='dark' onClick={toggleModal}>
-				Add Project +
+			<Button variant='warning' onClick={toggleModal}>
+				Edit
 			</Button>
-			<Modal show={isOpen} onHide={toggleModal} centered>
-				<Modal.Header closeButton>Enter Project Details</Modal.Header>
+			<Modal show={isOpen} onHide={toggleModal}>
+				<Modal.Header>Enter Project Details</Modal.Header>
 				<Modal.Body>
 					<Form>
 						<Form.Group>
@@ -62,15 +66,17 @@ export default function AddProjectModal() {
 								type='text'
 								id='title'
 								name='title'
+								value={title}
 								onChange={e => setTitle(e.target.value)}
 							/>
 						</Form.Group>
 						<Form.Group>
 							<Form.Label>Description</Form.Label>
 							<Form.Control
-								type='textarea'
+								as='textarea'
 								id='description'
 								name='description'
+								defaultValue={description}
 								onChange={e => setDescription(e.target.value)}
 							/>
 						</Form.Group>
