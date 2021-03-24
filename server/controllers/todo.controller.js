@@ -1,6 +1,7 @@
 const Todo = require('../models/Todo');
 const User = require('../models/User');
 const Project = require('../models/Project');
+const e = require('express');
 
 const getAllTodos = async (req, res) => {
 	try {
@@ -161,10 +162,58 @@ const deleteTodo = async (req, res) => {
 		});
 	}
 };
+const toggleCompleted = async (req, res) => {
+	try {
+		const validUser = await User.findById(req.user.id);
+
+		if (validUser) {
+			const validTodo = await Todo.findById(req.params.id);
+
+			if (validTodo) {
+				if (validTodo.user.toString() === validUser._id.toString()) {
+					const updatedTodo = await Todo.findByIdAndUpdate(
+						req.params.id,
+						{
+							$set: {
+								isComplete: !validTodo.isComplete,
+							},
+						},
+						{ new: true }
+					);
+
+					return res.status(200).json({
+						updatedTodo: updatedTodo,
+					});
+				} else {
+					return res.status(401).json({
+						error: 'not_authorized',
+						message: 'You are not authorized to update this todo',
+					});
+				}
+			} else {
+				return res.status(400).json({
+					error: 'bad_request',
+					message: `Todo with ${id} does not exist`,
+				});
+			}
+		} else {
+			return res.status(400).json({
+				error: 'bad_request',
+				message: `User with ${id} was not found`,
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({
+			error: 'server_error',
+			message: error.message,
+		});
+	}
+};
 
 module.exports = {
 	addTodo,
 	deleteTodo,
 	getAllTodos,
+	toggleCompleted,
 	updateTodo,
 };

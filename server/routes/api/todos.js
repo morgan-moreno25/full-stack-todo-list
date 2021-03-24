@@ -5,6 +5,7 @@ const todosController = require('../../controllers/todo.controller');
 
 router.get('/', authenticate, todosController.getAllTodos);
 router.post('/', authenticate, todosController.addTodo);
+router.post('/toggleCompleted/:id', authenticate, todosController.toggleCompleted);
 router.put('/:id', authenticate, todosController.updateTodo);
 router.delete('/:id', authenticate, todosController.deleteTodo);
 
