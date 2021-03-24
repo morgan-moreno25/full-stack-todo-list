@@ -56,8 +56,8 @@ export default function EditProjectModal() {
 			<Button variant='warning' onClick={toggleModal}>
 				Edit
 			</Button>
-			<Modal show={isOpen} onHide={toggleModal}>
-				<Modal.Header>Enter Project Details</Modal.Header>
+			<Modal show={isOpen} onHide={toggleModal} centered>
+				<Modal.Header closeButton>Enter Project Details</Modal.Header>
 				<Modal.Body>
 					<Form>
 						<Form.Group>

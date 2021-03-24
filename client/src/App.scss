@@ -1,6 +1,5 @@
 $primary: #d87cac;
 $secondary: #0fa3b1;
-$warning: #f9c74f;
 $danger: #ea000b;
 $success: #00ea65;
 $info: #473198;
@@ -14,29 +13,28 @@ $white: #fff;
 @media (min-width: 1000px) {
 	#app {
 		display: grid;
-		grid-template-rows: 10vh 90vh;
+		grid-template-rows: 100vh;
 		grid-template-columns: 20vw 80vw;
-		grid-template-areas:
-			'nav header'
-			'nav content';
+		grid-template-areas: 'nav content';
 	}
 
 	#nav {
 		grid-area: nav;
 		background: $light;
-		box-shadow: 0 2px 2px $dark;
-		display: flex;
-		flex-direction: column;
-		padding-top: 15vh;
+		display: grid;
+		grid-template-rows: 75% 25%;
+		justify-content: center;
 
 		ul {
+			height: 100%;
+			margin: 0;
 			list-style-type: none;
 			padding: 0;
 			display: flex;
 			flex-direction: column;
 
 			.project {
-				font-size: 1.4rem;
+				font-size: 1.6rem;
 				color: $secondary;
 				cursor: pointer;
 
@@ -49,39 +47,126 @@ $white: #fff;
 				}
 			}
 		}
-	}
-
-	#header {
-		grid-area: header;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-content: center;
-		border-bottom: 1px solid $dark;
-
-		#header-title {
+		#add-buttons {
+			height: 100%;
+			width: 100%;
 			display: flex;
+			flex-direction: column;
 			justify-content: center;
-			align-items: center;
-		}
-		#header-buttons {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
 			align-items: center;
 
 			button {
-				color: $white;
 				font-weight: bold;
-				height: 50%;
-				margin-left: 1rem;
-				margin-right: 1rem;
+				margin: 5px 0px;
 			}
 		}
 	}
 
 	#content {
 		grid-area: content;
+		background: $dark;
+
+		#auth {
+			background: $light;
+			margin: 15% auto;
+			padding: 25px;
+			height: 50vh;
+			width: 35vw;
+			display: grid;
+			grid-template-rows: 15% 70% 15%;
+			border-radius: 10px;
+			box-shadow: 25px 25px 5px $white;
+
+			h2 {
+				text-align: center;
+				font-size: 36px;
+				font-weight: bold;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+
+				.form-group {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: flex-start;
+				}
+
+				.form-buttons {
+					display: flex;
+					flex-direction: column;
+
+					button {
+						font-weight: bold;
+						color: $white;
+						margin: 5px 0px;
+					}
+				}
+			}
+
+			.alert {
+				margin: 0;
+				justify-self: center;
+				align-self: center;
+			}
+		}
+
+		#main {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+
+			#project-details {
+				margin: 20px 0px 5px 0px;
+				height: 25vh;
+				justify-self: center;
+				width: 100%;
+
+				.card-title {
+					font-size: 1.8rem;
+					font-weight: bold;
+					text-align: center;
+				}
+				.card-text {
+					font-size: 1rem;
+					text-align: center;
+				}
+
+				.card-footer {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+
+					button {
+						margin: 0rem 0.8rem;
+						width: 15rem;
+						color: $white;
+						font-weight: bold;
+					}
+				}
+			}
+			#todo-list {
+				margin: 15px 0px 20px 0px;
+				background: $light;
+				display: flex;
+				flex-direction: column;
+				height: 75vh;
+				padding: 10px 20px;
+
+				tr {
+					display: grid;
+					grid-template-columns: repeat(6, 1fr);
+
+					td {
+						justify-self: center;
+						align-self: center;
+						border: none;
+					}
+				}
+			}
+		}
 	}
 
 	#alert {

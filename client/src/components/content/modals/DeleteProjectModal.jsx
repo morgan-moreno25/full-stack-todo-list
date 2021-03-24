@@ -4,7 +4,6 @@ import { deleteProject } from '../../../redux/slices/project.slice';
 import { updateAlert, clearAlert } from '../../../redux/slices/alert.slice';
 
 import { Modal, Button } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
 
 export default function DeleteProjectModal({ project }) {
 	const dispatch = useDispatch();

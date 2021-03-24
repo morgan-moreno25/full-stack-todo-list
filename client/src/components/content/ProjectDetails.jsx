@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import EditProjectModal from './modals/EditProjectModal';
 import DeleteProjectModal from './modals/DeleteProjectModal';
 

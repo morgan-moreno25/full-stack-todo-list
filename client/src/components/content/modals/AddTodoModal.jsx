@@ -99,7 +99,7 @@ export default function AddTodoModal() {
 								as='select'
 								id='project'
 								name='project'
-								defaultValue={project.title}
+								defaultValue={currentProject.title}
 								onChange={e => setProject(e.target.value)}>
 								<option value={currentProject.title}>{currentProject.title}</option>
 								{otherProjects.map(project => (

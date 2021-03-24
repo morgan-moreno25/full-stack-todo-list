@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentProject } from '../../redux/slices/project.slice';
 
-import { Navbar, Button } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import AddProjectModal from '../content/modals/AddProjectModal';
+import AddTodoModal from '../content/modals/AddTodoModal';
 
 export default function Sidenav() {
 	const dispatch = useDispatch();
@@ -22,7 +23,10 @@ export default function Sidenav() {
 					</li>
 				))}
 			</ul>
-			<AddProjectModal />
+			<div id='add-buttons'>
+				<AddProjectModal />
+				<AddTodoModal />
+			</div>
 		</Navbar>
 	);
 }

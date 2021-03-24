@@ -51,7 +51,7 @@ export default function EditTodoModal({ todo }) {
 			<Button variant='warning' onClick={toggleModal}>
 				<FaRegEdit />
 			</Button>
-			<Modal show={modalOpen} onHide={toggleModal}>
+			<Modal show={modalOpen} onHide={toggleModal} centered>
 				<Modal.Header closeButton>Enter Todo Details</Modal.Header>
 				<Modal.Body>
 					<Form>

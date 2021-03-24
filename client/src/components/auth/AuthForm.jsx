@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login, register } from '../../redux/slices/auth.slice';
 import { updateAlert, clearAlert } from '../../redux/slices/alert.slice';
 
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 export default function AuthForm() {
 	const dispatch = useDispatch();
-
-	const { isAuthenticated } = useSelector(state => state.auth);
 
 	const [formType, setFormType] = useState('login');
 	const [username, setUsername] = useState('');
@@ -72,13 +70,18 @@ export default function AuthForm() {
 						onChange={e => setPassword(e.target.value)}
 					/>
 				</Form.Group>
-				<Button variant='secondary' onClick={toggleFormType}>
-					{formType === 'login' ? 'New User? Register Here' : 'Already have an account? Login Here'}
-				</Button>
-				<Button variant='primary' onClick={handleSubmit}>
-					Submit
-				</Button>
+				<div className='form-buttons'>
+					<Button variant='secondary' onClick={toggleFormType}>
+						{formType === 'login'
+							? 'New User? Register Here'
+							: 'Already have an account? Login Here'}
+					</Button>
+					<Button variant='primary' onClick={handleSubmit}>
+						Submit
+					</Button>
+				</div>
 			</Form>
+			<Alert variant='info'>TESTING - Username: test | password: 1234</Alert>
 		</Container>
 	);
 }

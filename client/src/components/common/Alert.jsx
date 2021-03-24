@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAlert } from '../../redux/slices/alert.slice';
-import capitalize from '../../utils/capitalize';
 
 import { Alert } from 'react-bootstrap';
 
@@ -22,7 +20,6 @@ export default function CustomAlert() {
 				onClose={handleClose}
 				dismissible
 				id='alert'>
-				<Alert.Heading>{capitalize(type)}</Alert.Heading>
 				<p>{message}</p>
 			</Alert>
 		);
