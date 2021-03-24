@@ -52,7 +52,7 @@ export default function AddProjectModal() {
 			<Button variant='dark' onClick={toggleModal}>
 				Add Project +
 			</Button>
-			<Modal show={isOpen} onHide={toggleModal} centered>
+			<Modal show={isOpen} onHide={toggleModal} centered className='add-modal'>
 				<Modal.Header closeButton>Enter Project Details</Modal.Header>
 				<Modal.Body>
 					<Form>
@@ -77,10 +77,10 @@ export default function AddProjectModal() {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='primary' onClick={handleSubmit}>
+					<Button variant='primary' onClick={handleSubmit} className='modal-btn'>
 						Submit
 					</Button>
-					<Button variant='danger' onClick={toggleModal}>
+					<Button variant='danger' onClick={toggleModal} className='modal-btn'>
 						Cancel
 					</Button>
 				</Modal.Footer>

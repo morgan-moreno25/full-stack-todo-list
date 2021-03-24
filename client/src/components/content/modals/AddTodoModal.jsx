@@ -110,10 +110,10 @@ export default function AddTodoModal() {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant='primary' onClick={handleSubmit}>
+					<Button variant='primary' onClick={handleSubmit} className='modal-btn'>
 						Submit
 					</Button>
-					<Button variant='danger' onClick={toggleModal}>
+					<Button variant='danger' onClick={toggleModal} className='modal-btn'>
 						Cancel
 					</Button>
 				</Modal.Footer>

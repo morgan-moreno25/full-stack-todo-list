@@ -40,10 +40,10 @@ export default function DeleteTodoModal({ todo }) {
 				<Modal.Header className='text-danger'>WARNING</Modal.Header>
 				<Modal.Body>Are you sure you want to delete this todo?</Modal.Body>
 				<Modal.Footer>
-					<Button variant='success' onClick={handleSubmit}>
+					<Button variant='success' onClick={handleSubmit} className='modal-btn'>
 						Yes
 					</Button>
-					<Button variant='danger' onClick={toggleModal}>
+					<Button variant='danger' onClick={toggleModal} className='modal-btn'>
 						No
 					</Button>
 				</Modal.Footer>
