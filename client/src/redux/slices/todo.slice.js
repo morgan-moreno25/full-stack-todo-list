@@ -73,10 +73,11 @@ export const deleteTodo = createAsyncThunk('todo/delete', async ({ id }, thunkAP
 	}
 });
 export const toggleCompleted = createAsyncThunk('todo/toggleComplete', async ({ id }, thunkAPI) => {
+	const body = {};
 	const config = useTokenConfig(thunkAPI.getState);
 
 	try {
-		const data = await todoService.toggleCompleted(id, config);
+		const data = await todoService.toggleCompleted(id, body, config);
 		if (data.error) {
 			throw data;
 		}

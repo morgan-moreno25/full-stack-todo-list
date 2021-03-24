@@ -1,4 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleCompleted } from '../../redux/slices/todo.slice';
+
 import { Badge, Table } from 'react-bootstrap';
 import capitalize from '../../utils/capitalize';
 
@@ -6,6 +8,8 @@ import EditTodoModal from './modals/EditTodoModal';
 import DeleteTodoModal from './modals/DeleteTodoModal';
 
 export default function TodoList() {
+	const dispatch = useDispatch();
+
 	const currentProject = useSelector(state => state.project.currentProject);
 	const todos = useSelector(state => state.todo.data);
 
@@ -18,7 +22,11 @@ export default function TodoList() {
 					{visibleTodos.map(todo => (
 						<tr className='todo-item'>
 							<td>
-								<input type='checkbox' checked={todo.isComplete} onChange={() => {}} />
+								<input
+									type='checkbox'
+									checked={todo.isComplete}
+									onChange={() => dispatch(toggleCompleted({ id: todo.id }))}
+								/>
 							</td>
 							<td>{todo.text}</td>
 							<td>

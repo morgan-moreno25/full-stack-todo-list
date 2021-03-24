@@ -35,9 +35,9 @@ const TodoService = (() => {
 			return error.response.data;
 		}
 	};
-	const toggleCompleted = async (id, config) => {
+	const toggleCompleted = async (id, body, config) => {
 		try {
-			const response = await axios.post(`${url}/toggleCompleted/${id}`, config);
+			const response = await axios.post(`${url}/toggleCompleted/${id}`, body, config);
 			return response.data;
 		} catch (error) {
 			return error.response.data;
