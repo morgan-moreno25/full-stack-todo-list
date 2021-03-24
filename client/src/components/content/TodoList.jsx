@@ -20,7 +20,7 @@ export default function TodoList() {
 			<Table hover size='sm'>
 				<tbody>
 					{visibleTodos.map(todo => (
-						<tr className='todo-item'>
+						<tr className={`todo-item ${todo.isComplete ? 'completed' : ''}`}>
 							<td>
 								<input
 									type='checkbox'

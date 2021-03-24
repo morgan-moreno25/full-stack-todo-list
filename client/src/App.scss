@@ -75,7 +75,6 @@ $white: #fff;
 			display: grid;
 			grid-template-rows: 15% 70% 15%;
 			border-radius: 10px;
-			box-shadow: 25px 25px 5px $white;
 
 			h2 {
 				text-align: center;
@@ -158,6 +157,12 @@ $white: #fff;
 				tr {
 					display: grid;
 					grid-template-columns: repeat(6, 1fr);
+
+					&.completed {
+						* {
+							text-decoration: line-through;
+						}
+					}
 
 					td {
 						justify-self: center;
