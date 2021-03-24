@@ -35,11 +35,20 @@ const TodoService = (() => {
 			return error.response.data;
 		}
 	};
+	const toggleCompleted = async (id, config) => {
+		try {
+			const response = await axios.post(`${url}/toggleCompleted/${id}`, config);
+			return response.data;
+		} catch (error) {
+			return error.response.data;
+		}
+	};
 
 	return {
 		addTodo,
 		deleteTodo,
 		getAllTodos,
+		toggleCompleted,
 		updateTodo,
 	};
 })();

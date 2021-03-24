@@ -72,6 +72,23 @@ export const deleteTodo = createAsyncThunk('todo/delete', async ({ id }, thunkAP
 		return thunkAPI.rejectWithValue(error);
 	}
 });
+export const toggleCompleted = createAsyncThunk('todo/toggleComplete', async ({ id }, thunkAPI) => {
+	const config = useTokenConfig(thunkAPI.getState);
+
+	try {
+		const data = await todoService.toggleCompleted(id, config);
+		if (data.error) {
+			throw data;
+		}
+
+		return {
+			id,
+			updatedTodo: data.updatedTodo,
+		};
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error);
+	}
+});
 
 const todoSlice = createSlice({
 	name: 'todo',
@@ -99,6 +116,9 @@ const todoSlice = createSlice({
 		$.addCase(deleteTodo.pending, state => {
 			state.isLoading = true;
 		});
+		$.addCase(toggleCompleted.pending, state => {
+			state.isLoading = true;
+		});
 		$.addCase(getAllTodos.fulfilled, (state, { payload }) => {
 			state.data = payload.todos;
 			state.isLoading = false;
@@ -118,6 +138,13 @@ const todoSlice = createSlice({
 			state.data = state.data.filter(todo => todo.id !== payload.id);
 			state.isLoading = false;
 		});
+		$.addCase(toggleCompleted.fulfilled, (state, { payload }) => {
+			const index = state.data.findIndex(todo => todo.id === payload.id);
+			if (index !== -1) {
+				state.data.splice(index, 1, payload.updatedTodo);
+			}
+			state.isLoading = false;
+		});
 		$.addCase(getAllTodos.rejected, (state, { payload }) => {
 			state.isLoading = false;
 			state.error = payload;
@@ -131,6 +158,10 @@ const todoSlice = createSlice({
 			state.error = payload;
 		});
 		$.addCase(deleteTodo.rejected, (state, { payload }) => {
+			state.isLoading = false;
+			state.error = payload;
+		});
+		$.addCase(toggleCompleted.rejected, (state, { payload }) => {
 			state.isLoading = false;
 			state.error = payload;
 		});
