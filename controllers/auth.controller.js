@@ -1,6 +1,9 @@
 const User = require('../models/User');
+const Project = require('../models/Project');
+const Todo = require('../models/Todo');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const config = require('../utils/config');
 
 const login = async (req, res) => {
@@ -59,6 +62,28 @@ const register = async (req, res) => {
 			});
 
 			const user = await newUser.save();
+
+			const initialProject = new Project({
+				title: 'First Project',
+				description: 'Welcome to Todo List, this is your first project!',
+				user: user._id,
+			});
+
+			const project = await initialProject.save();
+
+			
+
+			const initialTodos = [
+				{ text: 'Create your own project', priority: 'low', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id},
+				{ text: 'Create some todos', priority: 'low', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id },
+				{ text: 'Enjoy!', priority: 'high', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id },
+			];
+
+			initialTodos.forEach(todo => {
+				const newTodo = new Todo(todo);
+
+				await newTodo.save();
+			});
 
 			const token = await jwt.sign({ id: user._id }, config.JWT_SECRET);
 
