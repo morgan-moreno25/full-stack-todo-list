@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { login, register } from '../../redux/slices/auth.slice';
 import { updateAlert, clearAlert } from '../../redux/slices/alert.slice';
 
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Alert, Row } from 'react-bootstrap';
 
 export default function AuthForm() {
 	const dispatch = useDispatch();
@@ -47,41 +47,47 @@ export default function AuthForm() {
 	};
 
 	return (
-		<Container id='auth'>
-			<h2>{formType === 'login' ? 'Login' : 'Register'}</h2>
-			<Form>
-				<Form.Group>
-					<Form.Label>Username</Form.Label>
-					<Form.Control
-						type='text'
-						id='username'
-						name='username'
-						value={username}
-						onChange={e => setUsername(e.target.value)}
-					/>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type='password'
-						id='password'
-						name='password'
-						value={password}
-						onChange={e => setPassword(e.target.value)}
-					/>
-				</Form.Group>
-				<div className='form-buttons'>
-					<Button variant='secondary' onClick={toggleFormType}>
-						{formType === 'login'
-							? 'New User? Register Here'
-							: 'Already have an account? Login Here'}
-					</Button>
-					<Button variant='primary' onClick={handleSubmit}>
-						Submit
-					</Button>
-				</div>
-			</Form>
-			<Alert variant='info'>TESTING - Username: test | password: 1234</Alert>
+		<Container id='auth' className='card'>
+			<Row>
+				<h2>{formType === 'login' ? 'Login' : 'Register'}</h2>
+			</Row>
+			<Row>
+				<Form>
+					<Form.Group>
+						<Form.Label>Username</Form.Label>
+						<Form.Control
+							type='text'
+							id='username'
+							name='username'
+							value={username}
+							onChange={e => setUsername(e.target.value)}
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							type='password'
+							id='password'
+							name='password'
+							value={password}
+							onChange={e => setPassword(e.target.value)}
+						/>
+					</Form.Group>
+					<div className='form-buttons'>
+						<Button variant='secondary' onClick={toggleFormType}>
+							{formType === 'login'
+								? 'New User? Register Here'
+								: 'Already have an account? Login Here'}
+						</Button>
+						<Button variant='primary' onClick={handleSubmit}>
+							Submit
+						</Button>
+					</div>
+				</Form>
+			</Row>
+			<Row>
+				<Alert variant='info'>TESTING - Username: test | password: 1234</Alert>
+			</Row>
 		</Container>
 	);
 }

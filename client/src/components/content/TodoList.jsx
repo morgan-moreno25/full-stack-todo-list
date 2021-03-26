@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCompleted } from '../../redux/slices/todo.slice';
 
-import { Badge, Table } from 'react-bootstrap';
+import { Accordion, Badge, Container, Table } from 'react-bootstrap';
 import capitalize from '../../utils/capitalize';
 
 import EditTodoModal from './modals/EditTodoModal';
 import DeleteTodoModal from './modals/DeleteTodoModal';
+import Todo from './TodoItem';
 
 export default function TodoList() {
 	const dispatch = useDispatch();
@@ -16,43 +17,12 @@ export default function TodoList() {
 	const visibleTodos = todos.filter(todo => todo.project === currentProject.id);
 
 	return (
-		<div id='todo-list'>
-			<Table hover size='sm'>
-				<tbody>
-					{visibleTodos.map(todo => (
-						<tr className={`todo-item ${todo.isComplete ? 'completed' : ''}`}>
-							<td>
-								<input
-									type='checkbox'
-									checked={todo.isComplete}
-									onChange={() => dispatch(toggleCompleted({ id: todo.id }))}
-								/>
-							</td>
-							<td>{todo.text}</td>
-							<td>
-								<Badge
-									pill
-									variant={
-										todo.priority === 'low'
-											? 'secondary'
-											: todo.priority === 'medium'
-											? 'warning'
-											: 'danger'
-									}>
-									{capitalize(todo.priority)}
-								</Badge>
-							</td>
-							<td>Due {todo.timeUntilDue}</td>
-							<td>
-								<EditTodoModal todo={todo} />
-							</td>
-							<td>
-								<DeleteTodoModal todo={todo} />
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</Table>
-		</div>
+		<Container id='todo-list'>
+			<Accordion defaultActiveKey='0'>
+				{visibleTodos.map(todo => (
+					<Todo todo={todo} key={todo.id} />
+				))}
+			</Accordion>
+		</Container>
 	);
 }

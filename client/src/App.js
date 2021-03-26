@@ -5,9 +5,12 @@ import { getAllTodos } from './redux/slices/todo.slice';
 
 import './App.scss';
 import AuthForm from './components/auth/AuthForm';
-import Sidenav from './components/layout/Sidenav';
 import Alert from './components/common/Alert';
 import Content from './components/content';
+import Logout from './components/common/Logout';
+import Nav from './components/layout/Nav';
+
+import { Container } from 'react-bootstrap';
 
 export default function App() {
 	const dispatch = useDispatch();
@@ -20,10 +23,12 @@ export default function App() {
 		}
 	}, [isAuthenticated, dispatch]);
 	return (
-		<div id='app'>
+		<Container id='app' fluid>
 			<Alert />
-			<Sidenav />
-			<main id='content'>{isAuthenticated ? <Content /> : <AuthForm />}</main>
-		</div>
+			<Nav />
+			<Container as='main' fluid>
+				{isAuthenticated ? <Content /> : <AuthForm />}
+			</Container>
+		</Container>
 	);
 }

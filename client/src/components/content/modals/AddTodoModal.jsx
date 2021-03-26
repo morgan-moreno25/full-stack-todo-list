@@ -55,7 +55,7 @@ export default function AddTodoModal() {
 
 	return (
 		<>
-			<Button variant='success' onClick={toggleModal}>
+			<Button variant='secondary' onClick={toggleModal}>
 				Add Todo +
 			</Button>
 			<Modal show={modalOpen} onHide={toggleModal} centered className='add-modal'>
@@ -103,7 +103,9 @@ export default function AddTodoModal() {
 								onChange={e => setProject(e.target.value)}>
 								<option value={currentProject.title}>{currentProject.title}</option>
 								{otherProjects.map(project => (
-									<option value={project.title}>{project.title}</option>
+									<option value={project.title} key={project.id}>
+										{project.title}
+									</option>
 								))}
 							</Form.Control>
 						</Form.Group>

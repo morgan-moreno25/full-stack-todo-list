@@ -49,7 +49,7 @@ export default function AddProjectModal() {
 
 	return (
 		<>
-			<Button variant='dark' onClick={toggleModal}>
+			<Button variant='secondary' onClick={toggleModal}>
 				Add Project +
 			</Button>
 			<Modal show={isOpen} onHide={toggleModal} centered className='add-modal'>
