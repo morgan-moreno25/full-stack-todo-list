@@ -71,19 +71,36 @@ const register = async (req, res) => {
 
 			const project = await initialProject.save();
 
-			
-
 			const initialTodos = [
-				{ text: 'Create your own project', priority: 'low', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id},
-				{ text: 'Create some todos', priority: 'low', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id },
-				{ text: 'Enjoy!', priority: 'high', dueDate: moment().format('YYYY-MM-DD'), project: project._id, user: user._id },
+				{
+					text: 'Create your own project',
+					priority: 'low',
+					dueDate: moment().format('YYYY-MM-DD'),
+					project: project._id,
+					user: user._id,
+				},
+				{
+					text: 'Create some todos',
+					priority: 'low',
+					dueDate: moment().format('YYYY-MM-DD'),
+					project: project._id,
+					user: user._id,
+				},
+				{
+					text: 'Enjoy!',
+					priority: 'high',
+					dueDate: moment().format('YYYY-MM-DD'),
+					project: project._id,
+					user: user._id,
+				},
 			];
 
-			initialTodos.forEach(todo => {
-				const newTodo = new Todo(todo);
-
-				await newTodo.save();
-			});
+			let newTodo = new Todo(initialTodos[0]);
+			await newTodo.save();
+			newTodo = new Todo(initialTodos[1]);
+			await newTodo.save();
+			newTodo = new Todo(initialTodos[2]);
+			await newTodo.save();
 
 			const token = await jwt.sign({ id: user._id }, config.JWT_SECRET);
 
