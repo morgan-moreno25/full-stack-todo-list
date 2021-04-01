@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const config = require('./config');
 
-module.exports = connect_db = async () => {
+/**
+ * @description Establishes connection to the database
+ * @returns {Promise<String>}
+ */
+const connect_db = async () => {
 	try {
 		await mongoose.connect(config.MONGODB, {
 			useNewUrlParser: true,
@@ -14,3 +18,5 @@ module.exports = connect_db = async () => {
 		return error;
 	}
 };
+
+module.exports = connect_db;

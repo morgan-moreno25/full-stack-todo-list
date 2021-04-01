@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 const UserSchema = new Schema(
 	{
@@ -14,7 +14,7 @@ const UserSchema = new Schema(
 			required: true,
 		},
 	},
-	{ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt', currentTime: () => new Date() } }
+	{ timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt', currentTime: () => moment() } }
 );
 
 UserSchema.plugin(uniqueValidator);

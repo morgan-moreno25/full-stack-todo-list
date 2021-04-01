@@ -1,6 +1,12 @@
+const { Request, Response } = require('express');
 const Project = require('../models/Project');
 const User = require('../models/User');
 
+/**
+ * @description Get all projects
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const getAllProjects = async (req, res) => {
 	try {
 		const validUser = await User.findById(req.user.id);
@@ -22,6 +28,11 @@ const getAllProjects = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Create a project
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const addProject = async (req, res) => {
 	const { title, description } = req.body;
 
@@ -51,6 +62,11 @@ const addProject = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Update a single project
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const updateProject = async (req, res) => {
 	const { title, description } = req.body;
 
@@ -99,6 +115,11 @@ const updateProject = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Delete a single project
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const deleteProject = async (req, res) => {
 	try {
 		const validUser = await User.findById(req.user.id);

@@ -1,7 +1,5 @@
 const router = require('express').Router();
 
-router.use('/auth', require('./auth'));
-router.use('/todos', require('./todos'));
-router.use('/projects', require('./projects'));
+router.use('/v1', require('./v1'));
 
 module.exports = router;

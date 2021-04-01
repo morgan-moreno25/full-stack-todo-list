@@ -1,3 +1,4 @@
+const { Request, Response } = require('express');
 const User = require('../models/User');
 const Project = require('../models/Project');
 const Todo = require('../models/Todo');
@@ -6,6 +7,11 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const config = require('../utils/config');
 
+/**
+ * @description Login a user
+ * @param {Request} req Express request object
+ * @param {Respones} res Express response object
+ */
 const login = async (req, res) => {
 	const { username, password } = req.body;
 
@@ -41,6 +47,11 @@ const login = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Create a new user
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const register = async (req, res) => {
 	const { username, password } = req.body;
 
@@ -116,6 +127,11 @@ const register = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Load a user from the database
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const loadUser = async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);

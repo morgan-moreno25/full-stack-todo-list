@@ -1,8 +1,13 @@
+const { Request, Response } = require('express');
 const Todo = require('../models/Todo');
 const User = require('../models/User');
 const Project = require('../models/Project');
-const e = require('express');
 
+/**
+ * @description Get all todos
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const getAllTodos = async (req, res) => {
 	try {
 		const validUser = await User.findById(req.user.id);
@@ -24,6 +29,11 @@ const getAllTodos = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Create a todo
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const addTodo = async (req, res) => {
 	const { text, priority, dueDate, project } = req.body;
 
@@ -64,6 +74,11 @@ const addTodo = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Update a single todo
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const updateTodo = async (req, res) => {
 	const { text, priority, dueDate, project } = req.body;
 
@@ -123,6 +138,11 @@ const updateTodo = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Delete a single todo
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const deleteTodo = async (req, res) => {
 	try {
 		const validUser = await User.findById(req.user.id);
@@ -162,6 +182,11 @@ const deleteTodo = async (req, res) => {
 		});
 	}
 };
+/**
+ * @description Toggle the isComplete property on a single todo
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ */
 const toggleCompleted = async (req, res) => {
 	try {
 		const validUser = await User.findById(req.user.id);

@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const connect_db = require('./utils/db');
+const connect_db = require('./utils/connect_db');
 const { requestLogger } = require('./utils/middleware');
 
 const app = express();
